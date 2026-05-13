@@ -1,19 +1,20 @@
-#include <ti/screen.h>
-#include <ti/getcsc.h>
 #include <stdlib.h>
+#include <sys/lcd.h>
+#include <graphx.h>
+#include <ti/getcsc.h>
+#include <ti/screen.h>
+
+
+void FillScreen(uint8_t color);
 
 /* Main function, called first */
-int main(void)
-{
-    /* Clear the homescreen */
-    os_ClrHome();
-
-    /* Print a string */
-    os_PutStrFull("Hello, World.");
-
-    /* Waits for a key */
+int main(void) {
+    gfx_Begin();
+    gfx_SetDrawBuffer();
+    gfx_FillScreen(0x15);
+    gfx_BlitBuffer();
     while (!os_GetCSC());
 
-    /* Return 0 for success */
+    gfx_End();
     return 0;
 }
