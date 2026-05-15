@@ -1,6 +1,7 @@
 #include <keypadc.h>
 #include <stdlib.h>
 #include <sys/lcd.h>
+#include <sys/timers.h>
 #include <graphx.h>
 #include <ti/getcsc.h>
 #include <ti/screen.h>
