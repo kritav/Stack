@@ -4,7 +4,7 @@
 
 NAME = DEMO
 ICON = icon.png
-DESCRIPTION = "CE C Toolchain Demo"
+DESCRIPTION = "CE C Stack Game"
 COMPRESSED = NO
 
 CFLAGS = -Wall -Wextra -Oz
