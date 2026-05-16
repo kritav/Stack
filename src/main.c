@@ -78,6 +78,12 @@ int main(void) {
                 game_over = 1;
                 break;
             }
+            if (num_layers >= MAX_HEIGHT) {
+                for (int i = 0; i < MAX_HEIGHT - 1; i++) {
+                    layers[i] = layers[i + 1];
+                }
+                num_layers--;
+            }
             layers[num_layers].x = left_overlap;
             layers[num_layers].width = new_width;
             layers[num_layers].color = get_color(num_layers);
@@ -99,6 +105,10 @@ int main(void) {
         gfx_FillScreen(0x15);
 
         int y_pos = 200;
+        int max_visible = 12;
+        if (num_layers > max_visible) {
+            y_pos = 200 + (num_layers - max_visible) * 16;
+        }
         for (int i = 0; i < num_layers; i++) {
             draw_block(layers[i].x, y_pos - (i * 16), layers[i].width, layers[i].color);
         }
