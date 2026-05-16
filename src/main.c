@@ -19,6 +19,7 @@ typedef struct {
 Layer layers[MAX_HEIGHT];
 uint8_t colors[] = {0x10, 0x30, 0x50, 0x70, 0x90, 0xB0, 0xD0, 0xF0, 0xD0, 0xB0, 0x90, 0x70, 0x50, 0x30};
 int num_layers;
+int total_drops;
 int direction;
 int x_pos;
 int layer_width;
@@ -46,6 +47,7 @@ int main(void) {
     layers[0].width = 100;
     layers[0].color = colors[0];
     num_layers = 1;
+    total_drops = 0; 
 
     x_pos = 110;
     layer_width = 100;
@@ -86,8 +88,9 @@ int main(void) {
             }
             layers[num_layers].x = left_overlap;
             layers[num_layers].width = new_width;
-            layers[num_layers].color = get_color(num_layers);
+            layers[num_layers].color = get_color(total_drops);
             num_layers++;
+            total_drops++;
 
             x_pos = left_overlap;
             layer_width = new_width; 
@@ -112,7 +115,7 @@ int main(void) {
         for (int i = 0; i < num_layers; i++) {
             draw_block(layers[i].x, y_pos - (i * 16), layers[i].width, layers[i].color);
         }
-        draw_block(x_pos, y_pos - (num_layers * 16), layer_width, get_color(num_layers)); 
+        draw_block(x_pos, y_pos - (num_layers * 16), layer_width, get_color(total_drops + 1)); 
         gfx_BlitBuffer();
         delay(30);
     }
