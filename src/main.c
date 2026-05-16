@@ -29,12 +29,21 @@ void draw_block (int x, int y, int width, uint8_t color) {
     gfx_FillRectangle(x, y, width, 15);
 }
 
+uint8_t get_color(int index) {
+    if ((index % 14) < 8) {
+        return colors[index % 14];
+    }
+    else {
+        return colors[14 - (index % 14)];
+    }
+}
+
 int main(void) {
     gfx_Begin();
     gfx_SetDrawBuffer();
 
     layers[0].x = 110;
-    layers[0].layer_width = 100;
+    layers[0].width = 100;
     layers[0].color = colors[0];
     num_layers = 1;
 
@@ -57,11 +66,11 @@ int main(void) {
             }
 
             int right_overlap;
-            if (x_pos + layer_width < prev->x + prev->layer_width) {
+            if (x_pos + layer_width < prev->x + prev->width) {
                 right_overlap = x_pos + layer_width;
             }
             else {
-                right_overlap = prev->x + prev->layer_width;
+                right_overlap = prev->x + prev->width;
             }
 
             int new_width = right_overlap - left_overlap;
@@ -70,13 +79,8 @@ int main(void) {
                 break;
             }
             layers[num_layers].x = left_overlap;
-            layers[num_layers].layer_width = new_width;
-            if (num_layers % 14 < 8) {
-                layers[num_layers].color = colors[num_layers % 14];
-            }
-            else {
-                layers[num_layers].color = colors[14 - (num_layers % 14)];
-            }
+            layers[num_layers].width = new_width;
+            layers[num_layers].color = get_color(num_layers);
             num_layers++;
 
             x_pos = left_overlap;
@@ -96,9 +100,9 @@ int main(void) {
 
         int y_pos = 200;
         for (int i = 0; i < num_layers; i++) {
-            draw_block(layers[i].x, y_pos - (i * 16), layers[i].layer_width, layers[i].color);
+            draw_block(layers[i].x, y_pos - (i * 16), layers[i].width, layers[i].color);
         }
-        draw_block(x_pos, y_pos - (num_layers * 16), layer_width, 0xe0); 
+        draw_block(x_pos, y_pos - (num_layers * 16), layer_width, get_color(num_layers)); 
         gfx_BlitBuffer();
         delay(30);
     }
