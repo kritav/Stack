@@ -1,3 +1,3 @@
-### Hello World Demo
+### Stack Game
 
-Displays the text `Hello, World!` on the calculator.
+Play the popular `Stack` game on your calculator!

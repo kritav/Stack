@@ -32,7 +32,6 @@ void draw_block (int x, int y, int width, uint8_t color) {
 int main(void) {
     gfx_Begin();
     gfx_SetDrawBuffer();
-    //gfx_FillScreen(0x15); // light blue
 
     layers[0].x = 110;
     layers[0].layer_width = 100;
