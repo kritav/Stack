@@ -20,6 +20,7 @@ Layer layers[MAX_HEIGHT];
 uint8_t colors[] = {0x10, 0x30, 0x50, 0x70, 0x90, 0xB0, 0xD0, 0xF0, 0xD0, 0xB0, 0x90, 0x70, 0x50, 0x30};
 int num_layers;
 int total_drops;
+int speed;
 int direction;
 int x_pos;
 int layer_width;
@@ -48,7 +49,8 @@ int main(void) {
     layers[0].color = colors[0];
     num_layers = 1;
     total_drops = 0; 
-
+    
+    speed = 2;
     x_pos = 110;
     layer_width = 100;
     direction = 1;
@@ -91,6 +93,10 @@ int main(void) {
             layers[num_layers].color = get_color(total_drops);
             num_layers++;
             total_drops++;
+            if ((total_drops != 0) && (total_drops % 10 == 0)) {
+                speed++;
+                if (speed > 10) speed = 10;
+            }
 
             x_pos = left_overlap;
             layer_width = new_width; 
@@ -100,7 +106,7 @@ int main(void) {
         }
 
         if (kb_Data[6] & kb_Clear) break;
-        x_pos += direction * 5;
+        x_pos += direction * speed;
         if ((x_pos <= 0) || (x_pos + layer_width >= SCREEN_WIDTH)) {
             direction = -direction;
         }
